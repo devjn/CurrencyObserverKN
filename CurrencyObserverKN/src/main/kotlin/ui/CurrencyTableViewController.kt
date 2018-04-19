@@ -11,11 +11,10 @@ class CurrencyTableViewController(aDecoder: NSCoder) : UITableViewController(aDe
 
 
     private val data = ArrayList<Pair<String, Double>>()
-
-
-    override fun tableViewCellForRowAtIndexPath(tableView: UITableView, indexPath: NSIndexPath): UITableViewCell {
-        val cell = tableView.dequeueReusableCellWithIdentifierForIndexPath(CELL_IDENTIFIER, indexPath) as UITableViewCell
-        val item = data.get(indexPath.item().toInt())
+	
+	    override fun tableView(tableView: UITableView, cellForRowAtIndexPath: NSIndexPath): UITableViewCell {
+        val cell = tableView.dequeueReusableCellWithIdentifierForIndexPath(CELL_IDENTIFIER, cellForRowAtIndexPath) as UITableViewCell
+        val item = data.get(cellForRowAtIndexPath.item().toInt())
         val text = "1 EUR = ${item.second} ${item.first}"
         cell.textLabel().setText(text)
         val url = getImageUrl(item.first)
@@ -24,14 +23,14 @@ class CurrencyTableViewController(aDecoder: NSCoder) : UITableViewController(aDe
         return cell
     }
 
-    override fun tableViewNumberOfRowsInSection(tableView: UITableView?, section: Long): Long {
+
+    override fun tableView(tableView: UITableView, numberOfRowsInSection: NSInteger): NSInteger {
         println("CurrencyFragment " + "data.size.toLong() = " + data.size.toLong())
         return data.size.toLong()
     }
 
-    override fun numberOfSectionsInTableView(tableView: UITableView?): Long {
-        return 1
-    }
+    override fun numberOfSectionsInTableView(tableView: UITableView) = 1
+	
 
     override fun viewDidLoad() {
         super.viewDidLoad()
